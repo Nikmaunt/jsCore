@@ -25,11 +25,9 @@ function selectFromInterval(arr, intervalStart, intervalEnd) {
 		throw new Error('Ошибка!');
 	}
 
-	if (intervalStart < intervalEnd) {
-		return arr.filter((num) => num >= intervalStart && num <= intervalEnd);
-	} else {
-		return arr.filter((num) => num >= intervalEnd && num <= intervalStart);
-	}
+	const [start, end] = intervalStart < intervalEnd ? [intervalStart, intervalEnd] : [intervalEnd, intervalStart];
+
+	return arr.filter((num) => num >= start && num <= end);
 }
 
 const myIterable = {
