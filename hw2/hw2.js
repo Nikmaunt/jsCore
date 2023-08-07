@@ -32,7 +32,6 @@ function selectFromInterval(arr, intervalStart, intervalEnd) {
 	}
 }
 
-
 const myIterable = {
 	from: 1,
 	to: 4,
