@@ -19,7 +19,7 @@ function concatStrings(initialString, separator) {
 class Calculator {
 	constructor(x, y) {
 		if (!this.isValidNumber(x) || !this.isValidNumber(y)) {
-			throw new Error('Invalid value');
+			throw new Error('Invalid number');
 		}
 		this.x = x;
 		this.y = y;
@@ -50,14 +50,14 @@ class Calculator {
 
 	setX(num) {
 		if (!this.isValidNumber(num)) {
-			throw new Error('Invalid value');
+			throw new Error('Invalid number');
 		}
 		this.x = num;
 	}
 
 	setY(num) {
 		if (!this.isValidNumber(num)) {
-			throw new Error('Error!');
+			throw new Error('Invalid number');
 		}
 		this.y = num;
 	}
@@ -66,7 +66,7 @@ class Calculator {
 const calculator = new Calculator(12, 3);
 calculator.logSum(); // 15
 calculator.logDiv(); // 4
-calculator.setX('');
+calculator.setX(10);
 calculator.logDiv(); // 5
 
 const logCalculatorDiv = calculator.logDiv;
