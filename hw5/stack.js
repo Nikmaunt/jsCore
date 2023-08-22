@@ -22,6 +22,7 @@ class Stack {
 		}
 
 		const newNode = new Node(elem, this.top);
+
 		this.top = newNode;
 		this.size++;
 	}
@@ -34,6 +35,7 @@ class Stack {
 		const poppedValue = this.top.value;
 		this.top = this.top.next;
 		this.size--;
+
 		return poppedValue;
 	}
 
@@ -52,10 +54,12 @@ class Stack {
 	toArray() {
 		const result = [];
 		let current = this.top;
+
 		while (current) {
 			result.push(current.value);
 			current = current.next;
 		}
+
 		return result.reverse();
 	}
 
@@ -65,9 +69,11 @@ class Stack {
 		}
 
 		const stack = new Stack(iterable.length);
+
 		for (const item of iterable) {
 			stack.push(item);
 		}
+
 		return stack;
 	}
 }
@@ -91,7 +97,7 @@ class LinkedList {
 	}
 
 	prepend(elem) {
-		const newNode = { value: elem, next: this.head };
+		const newNode = new Node(elem, this.head);
 
 		if (!this.head) {
 			this.head = newNode;
@@ -102,35 +108,4 @@ class LinkedList {
 	}
 }
 
-// module.exports = { Stack, LinkedList };
-
-
-const stack = new Stack(3);
-
-// Проверяем добавление элементов
-stack.push(1);
-stack.push(2);
-stack.push(3);
-
-// Ожидаем ошибку, так как стек переполнен
-try {
-	stack.push(4);
-} catch (error) {
-	console.error(error.message); // Output: Stack is full
-}
-
-// Проверяем метод pop
-console.log(stack.pop()); // Output: 3
-
-// Проверяем метод peek
-console.log(stack.peek()); // Output: 2
-
-// Проверяем метод isEmpty
-console.log(stack.isEmpty()); // Output: false
-
-// Проверяем метод toArray
-console.log(stack.toArray()); // Output: [1, 2]
-
-// Создаем стек из итерируемой сущности
-const iterableStack = Stack.fromIterable([5, 6, 7]);
-console.log(iterableStack.toArray()); // Output: [5, 6, 7]
+module.exports = { Stack, LinkedList };
