@@ -21,6 +21,7 @@ class Calculator {
 		if (!this.isValidNumber(x) || !this.isValidNumber(y)) {
 			throw new Error('Invalid number');
 		}
+
 		this.x = x;
 		this.y = y;
 
