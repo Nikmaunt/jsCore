@@ -62,4 +62,3 @@ class Calculator {
 		this.y = num;
 	}
 }
-
