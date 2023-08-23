@@ -77,3 +77,5 @@ class Stack {
 		return stack;
 	}
 }
+
+module.exports = { Stack };
