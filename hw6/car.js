@@ -1,4 +1,4 @@
-export class Car {
+class Car {
 	#brand;
 	#model;
 	#yearOfManufacturing;
@@ -18,9 +18,9 @@ export class Car {
 		this.#setFuelConsumption(fuelConsumption);
 	}
 
-	#validateNumber(value, minValue, maxValue) {
+	#validateNumber(value, minValue, maxValue, errorMessage) {
 		if (typeof value !== 'number' || isNaN(value) || value < minValue || value > maxValue) {
-			throw new Error(`Invalid value, should be between ${minValue} and ${maxValue}`);
+			throw new Error(errorMessage);
 		}
 	}
 
@@ -40,22 +40,22 @@ export class Car {
 
 	#setYearOfManufacturing(year) {
 		const currentYear = new Date().getFullYear();
-		this.#validateNumber(year, 1900, currentYear);
+		this.#validateNumber(year, 1900, currentYear, 'Invalid year of manufacturing');
 		this.#yearOfManufacturing = year;
 	}
 
 	#setMaxSpeed(speed) {
-		this.#validateNumber(speed, 100, 300);
+		this.#validateNumber(speed, 100, 300, 'Invalid max speed');
 		this.#maxSpeed = speed;
 	}
 
 	#setMaxFuelVolume(volume) {
-		this.#validateNumber(volume, 5, 20);
+		this.#validateNumber(volume, 5, 20, 'Invalid max fuel volume');
 		this.#maxFuelVolume = volume;
 	}
 
 	#setFuelConsumption(consumption) {
-		this.#validateNumber(consumption, 0, 100);
+		this.#validateNumber(consumption, 0, 100, 'Invalid fuel consumption');
 		this.#fuelConsumption = consumption;
 	}
 
@@ -74,7 +74,7 @@ export class Car {
 	}
 
 	fillUpGasTank(fuel) {
-		this.#validateNumber(fuel, 0, this.#maxFuelVolume - this.#currentFuelVolume);
+		this.#validateNumber(fuel, 1, this.#maxFuelVolume - this.#currentFuelVolume, 'Invalid amount of fuel to fill up');
 
 		if (this.#currentFuelVolume + fuel > this.#maxFuelVolume) {
 			throw new Error('Gas tank overflow');
@@ -84,11 +84,11 @@ export class Car {
 	}
 
 	drive(speed, hours) {
-		this.#validateNumber(speed, 1, this.#maxSpeed);
-		this.#validateNumber(hours, 1, Number.MAX_SAFE_INTEGER);
+		this.#validateNumber(speed, 1, this.#maxSpeed, 'Car cannot go that fast');
+		this.#validateNumber(hours, 1, Number.MAX_SAFE_INTEGER, 'Invalid number of hours');
 
 		if (!this.#isStarted) {
-			throw new Error('Car should be started to drive');
+			throw new Error('Car must be started to drive');
 		}
 
 		const maxDistance = this.#currentFuelVolume / (this.#fuelConsumption / 100);
@@ -138,3 +138,35 @@ export class Car {
 		return this.#mileage;
 	}
 }
+
+const car = new Car({
+	brand: 'Toyota',
+	model: 'Camry',
+	yearOfManufacturing: 2022,
+	maxSpeed: 250,
+	maxFuelVolume: 15,
+	fuelConsumption: 4,
+});
+
+console.log(`Brand: ${car.brand}`);
+console.log(`Model: ${car.model}`);
+console.log(`Year of Manufacturing: ${car.yearOfManufacturing}`);
+console.log(`Max Speed: ${car.maxSpeed}`);
+console.log(`Max Fuel Volume: ${car.maxFuelVolume}`);
+console.log(`Fuel Consumption: ${car.fuelConsumption}`);
+console.log(`Current Fuel Volume: ${car.currentFuelVolume}`);
+console.log(`Is Started: ${car.isStarted}`);
+console.log(`Mileage: ${car.mileage}`);
+
+car.start();
+console.log(`Is Started: ${car.isStarted}`);
+
+car.fillUpGasTank(15);
+console.log(`Current Fuel Volume: ${car.currentFuelVolume}`);
+
+car.drive(1, 400);
+console.log(`Mileage: ${car.mileage}`);
+
+car.shutDownEngine();
+console.log(`Is Started: ${car.isStarted}`);
+
