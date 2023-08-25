@@ -139,34 +139,5 @@ class Car {
 	}
 }
 
-const car = new Car({
-	brand: 'Toyota',
-	model: 'Camry',
-	yearOfManufacturing: 2022,
-	maxSpeed: 250,
-	maxFuelVolume: 15,
-	fuelConsumption: 4,
-});
 
-console.log(`Brand: ${car.brand}`);
-console.log(`Model: ${car.model}`);
-console.log(`Year of Manufacturing: ${car.yearOfManufacturing}`);
-console.log(`Max Speed: ${car.maxSpeed}`);
-console.log(`Max Fuel Volume: ${car.maxFuelVolume}`);
-console.log(`Fuel Consumption: ${car.fuelConsumption}`);
-console.log(`Current Fuel Volume: ${car.currentFuelVolume}`);
-console.log(`Is Started: ${car.isStarted}`);
-console.log(`Mileage: ${car.mileage}`);
-
-car.start();
-console.log(`Is Started: ${car.isStarted}`);
-
-car.fillUpGasTank(15);
-console.log(`Current Fuel Volume: ${car.currentFuelVolume}`);
-
-car.drive(1, 400);
-console.log(`Mileage: ${car.mileage}`);
-
-car.shutDownEngine();
-console.log(`Is Started: ${car.isStarted}`);
 
