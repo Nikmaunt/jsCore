@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(to bottom right, #b0d4f1, #86a8d9);
+    }
+
+    .calculator {
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      width: 400px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .display {
+      background-color: #f0f0f0;
+      color: #333;
+      font-size: 2rem;
+      padding: 10px 20px;
+      text-align: right;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .previous-operations {
+      font-size: 14px;
+      margin-top: 5px;
+      color: #777;
+      text-align: right;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px;
+    }
+
+    .group-1 {
+      background-color: #b0d4f1;
+      color: #333;
+    }
+
+    .group-2 {
+      background-color: #86a8d9;
+      color: #333;
+    }
+
+    .group-3 {
+      background-color: #86a8d9;
+      color: #333;
+    }
+
+    .group-4 {
+      background-color: #86a8d9;
+      color: #333;
+    }
+
+    button {
+      border: none;
+      border-radius: 8px;
+      font-size: 1.5rem;
+      padding: 20px;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    button:hover {
+      background-color: #d6e6f1;
+    }
+
+    .buttons button:active {
+      background-color: #b0d4f1;
+    }
+  </style>
+</head>
+<body>
+<div class="calculator">
+  <div class="display" id="display">
+    <div class="previous-operations" id="previous-operations"></div>
+    0
+  </div>
+  <div class="buttons">
+    <button class="group-1" id="btn-1">1</button>
+    <button class="group-1" id="btn-2">2</button>
+    <button class="group-1" id="btn-3">3</button>
+    <button class="group-2" id="btn-divide">÷</button>
+    <button class="group-1" id="btn-4">4</button>
+    <button class="group-1" id="btn-5">5</button>
+    <button class="group-1" id="btn-6">6</button>
+    <button class="group-2" id="btn-multiply">×</button>
+    <button class="group-1" id="btn-7">7</button>
+    <button class="group-1" id="btn-8">8</button>
+    <button class="group-1" id="btn-9">9</button>
+    <button class="group-2" id="btn-minus">-</button>
+    <button class="group-4" id="btn-0">0</button>
+    <button class="group-4" id="btn-double-zero">00</button>
+    <button class="group-3" id="btn-plus">+</button>
+    <button class="group-4" id="btn-dot">.</button>
+    <button class="group-3" id="btn-equal">=</button>
+    <button id="btn-percent">%</button>
+    <button id="btn-root">√</button>
+    <button id="btn-sign">+/-</button>
+    <button id="btn-clear">C</button>
+    <button id="btn-m-plus">M+</button>
+    <button id="btn-m-minus">M-</button>
+    <button id="btn-m-recall">MR</button>
+    <button id="btn-m-clear">MC</button>
+    <button id="btn-backspace">←</button>
+  </div>
+</div>
+<script src="calculator.js"></script>
+</body>
+</html>
