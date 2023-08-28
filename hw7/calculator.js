@@ -1,211 +1,251 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const display = document.getElementById('display');
-    const previousOperations = document.getElementById('previous-operations');
-    let memoryValue = 0;
-    let currentInput = '0';
-    let currentOperation = '';
-    let hasDecimal = false;
-    let memoryOperator = '';
+	const display = document.getElementById('display');
+	let memoryValue = 0;
+	let currentInput = '0';
+	let currentOperation = '';
+	let hasDecimal = false;
+	let memoryOperator = '';
+	let previousOperations = '';
+	document.addEventListener('keydown', function (event) {
+		event.preventDefault();
+		const key = event.key;
 
-    function handleMemoryAdd() {
-        memoryValue += parseFloat(currentInput);
-        memoryOperator = '+';
-    }
+		switch (key) {
+			case '+':
+			case '-':
+			case '*':
+			case '/':
+				handleOperatorInput(key);
+				break;
+			case '%':
+				handlePercentage();
+				break;
+			case 'Enter':
+				evaluate();
+				currentOperation = '';
+				break;
+			case 'Backspace':
+				handleBackspace();
+				break;
+			case 'Escape':
+				handleAllClear();
+				break;
+			case '.':
+				handleDecimalInput();
+				break;
+			default:
+				// Если нажата цифровая клавиша
+				if (/^\d$/.test(key)) {
+					handleNumberInput(key);
+				}
+				break;
+		}
+	});
 
-    function handleMemorySubtract() {
-        memoryValue -= parseFloat(currentInput);
-        memoryOperator = '-';
-    }
+	function handleMemoryAdd() {
+		memoryValue += parseFloat(currentInput);
+		memoryOperator = '+';
+	}
 
-    function handleMemoryRecall() {
-        currentInput = memoryValue.toString();
-        updateDisplay();
-    }
+	function handleMemorySubtract() {
+		memoryValue -= parseFloat(currentInput);
+		memoryOperator = '-';
+	}
 
-    function updateDisplay() {
-        display.textContent = currentInput;
-        previousOperations.textContent = currentOperation;
-    }
+	function handleMemoryRecall() {
+		currentInput = memoryValue.toString();
+		updateDisplay();
+	}
 
-    function handleNumberInput(number) {
-        if (currentInput === '0') {
-            currentInput = number;
-        } else {
-            currentInput += number;
-        }
-        updateDisplay();
-    }
+	function updateDisplay() {
+		const currentInputDisplay = document.querySelector('.current-input');
+		const previousOperationsDisplay = document.querySelector('.previous-operations');
 
-    function handleOperatorInput(operator) {
-        if (currentOperation) {
-            evaluate();
-        }
-        currentOperation = `${currentInput} ${operator}`;
-        currentInput = '0';
-        hasDecimal = false;
-        updateDisplay();
-    }
+		currentInputDisplay.textContent = currentInput;
+		previousOperationsDisplay.textContent = currentOperation;
+	}
 
-    function evaluate() {
-        if (currentOperation) {
-            const operationParts = currentOperation.split(' ');
-            const operand1 = parseFloat(operationParts[0]);
-            const operator = operationParts[1];
-            const operand2 = parseFloat(currentInput);
-            let result = 0;
+	function handleNumberInput(number) {
+		if (currentInput === '0') {
+			currentInput = number;
+		} else {
+			currentInput += number;
+		}
+		updateDisplay();
+	}
 
-            switch (operator) {
-                case '+':
-                    result = operand1 + operand2;
-                    break;
-                case '-':
-                    result = operand1 - operand2;
-                    break;
-                case '×':
-                    result = operand1 * operand2;
-                    break;
-                case '÷':
-                    result = operand1 / operand2;
-                    break;
-                case '%':
-                    result = (operand1 * operand2) / 100;
-                    break;
-            }
+	function handleOperatorInput(operator) {
+		if (currentOperation) {
+			evaluate();
+			currentOperation = `${currentInput} ${operator}`;
+		} else {
+			currentOperation = `${currentInput} ${operator}`;
+		}
+		currentInput = '0';
+		hasDecimal = false;
+		updateDisplay();
+	}
 
-            currentInput = result.toFixed(8).toString();
-            currentOperation = '';
-            updateDisplay();
-        }
-    }
+	function evaluate() {
+		if (currentOperation) {
+			const operationParts = currentOperation.split(' ');
+			const operand1 = parseFloat(operationParts[0]);
+			const operator = operationParts[1];
+			const operand2 = parseFloat(currentInput);
+			let result = 0;
 
-    function handleDecimalInput() {
-        if (!hasDecimal) {
-            currentInput += '.';
-            hasDecimal = true;
-            updateDisplay();
-        }
-    }
+			switch (operator) {
+				case '+':
+					result = operand1 + operand2;
+					break;
+				case '-':
+					result = operand1 - operand2;
+					break;
+				case '*':
+					result = operand1 * operand2;
+					break;
+				case '/':
+					result = operand1 / operand2;
+					break;
+				case '%':
+					result = (operand1 * operand2) / 100;
+					break;
+			}
 
-    function handlePercentage() {
-        if (currentOperation) {
-            evaluate();
-        }
-        currentInput = (parseFloat(currentInput) / 100).toString();
-        updateDisplay();
-    }
+			currentInput = result.toFixed(8).toString();
+			currentOperation = '';
+			updateDisplay();
+		}
+	}
 
-    function handleSquareRoot() {
-        currentInput = Math.sqrt(parseFloat(currentInput)).toString();
-        updateDisplay();
-    }
+	function handleDecimalInput() {
+		if (!hasDecimal) {
+			currentInput += '.';
+			hasDecimal = true;
+			updateDisplay();
+		}
+	}
 
-    function changeSign() {
-        currentInput = (-parseFloat(currentInput)).toString();
-        updateDisplay();
-    }
+	function handlePercentage() {
+		if (currentOperation) {
+			evaluate();
+		}
+		currentInput = (parseFloat(currentInput) / 100).toString();
+		updateDisplay();
+	}
 
-    function handleMemoryAdd() {
-        memoryValue += parseFloat(currentInput);
-    }
+	function handleSquareRoot() {
+		currentInput = Math.sqrt(parseFloat(currentInput)).toString();
+		updateDisplay();
+	}
 
-    function handleMemorySubtract() {
-        memoryValue -= parseFloat(currentInput);
-    }
+	function changeSign() {
+		currentInput = (-parseFloat(currentInput)).toString();
+		updateDisplay();
+	}
 
-    function handleMemoryRecall() {
-        currentInput = memoryValue.toString();
-        updateDisplay();
-    }
+	function handleMemoryAdd() {
+		memoryValue += parseFloat(currentInput);
+	}
 
-    function handleMemoryClear() {
-        memoryValue = 0;
-    }
+	function handleMemorySubtract() {
+		memoryValue -= parseFloat(currentInput);
+	}
 
-    function handleClear() {
-        currentInput = '0';
-        currentOperation = '';
-        hasDecimal = false;
-        updateDisplay();
-    }
+	function handleMemoryRecall() {
+		currentInput = memoryValue.toString();
+		updateDisplay();
+	}
 
-    function handleAllClear() {
-        handleClear();
-        handleMemoryClear();
-    }
+	function handleMemoryClear() {
+		memoryValue = 0;
+	}
 
-    function handleBackspace() {
-        if (currentInput.length > 1) {
-            currentInput = currentInput.slice(0, -1);
-        } else {
-            currentInput = '0';
-        }
-        updateDisplay();
-    }
+	function handleClear() {
+		currentInput = '0';
+		currentOperation = '';
+		hasDecimal = false;
+		updateDisplay();
+	}
 
-    function handleZeroZero() {
-        currentInput += '00';
-        updateDisplay();
-    }
+	function handleAllClear() {
+		handleClear();
+		handleMemoryClear();
+	}
 
-    function handleButtonClick(event) {
-        const buttonValue = event.target.textContent;
+	function handleBackspace() {
+		if (currentInput.length > 1) {
+			currentInput = currentInput.slice(0, -1);
+		} else {
+			currentInput = '0';
+		}
+		updateDisplay();
+	}
 
-        switch (buttonValue) {
-            case '+':
-            case '-':
-            case '×':
-            case '÷':
-                handleOperatorInput(buttonValue);
-                break;
-            case '%':
-                handlePercentage();
-                break;
-            case '√':
-                handleSquareRoot();
-                break;
-            case '+/-':
-                changeSign();
-                break;
-            case 'M+':
-                handleMemoryAdd();
-                break;
-            case 'M-':
-                handleMemorySubtract();
-                break;
-            case 'MR':
-                handleMemoryRecall();
-                break;
-            case 'MC':
-                handleMemoryClear();
-                break;
-            case 'C':
-                handleClear();
-                break;
-            case 'AC':
-                handleAllClear();
-                break;
-            case '←':
-                handleBackspace();
-                break;
-            case '00':
-                handleZeroZero();
-                break;
-            case '.':
-                handleDecimalInput();
-                break;
-            case '=':
-                evaluate();
-                break;
-            default:
-                if (buttonValue >= '0' && buttonValue <= '9') {
-                    handleNumberInput(buttonValue);
-                }
-                break;
-        }
-    }
+	function handleZeroZero() {
+		currentInput += '00';
+		updateDisplay();
+	}
 
-    const buttons = document.querySelectorAll('.buttons button');
-    buttons.forEach(button => {
-        button.addEventListener('click', handleButtonClick);
-    });
+	function handleButtonClick(event) {
+		const buttonValue = event.target.textContent;
+
+		switch (buttonValue) {
+			case '+':
+			case '-':
+			case '×':
+			case '÷':
+				handleOperatorInput(buttonValue);
+				break;
+			case '%':
+				handlePercentage();
+				break;
+			case '√':
+				handleSquareRoot();
+				break;
+			case '+/-':
+				changeSign();
+				break;
+			case 'M+':
+				handleMemoryAdd();
+				break;
+			case 'M-':
+				handleMemorySubtract();
+				break;
+			case 'MR':
+				handleMemoryRecall();
+				break;
+			case 'MC':
+				handleMemoryClear();
+				break;
+			case 'C':
+				handleClear();
+				break;
+			case 'AC':
+				handleAllClear();
+				break;
+			case '←':
+				handleBackspace();
+				break;
+			case '00':
+				handleZeroZero();
+				break;
+			case '.':
+				handleDecimalInput();
+				break;
+			case '=':
+				evaluate();
+				break;
+			default:
+				if (buttonValue >= '0' && buttonValue <= '9') {
+					handleNumberInput(buttonValue);
+				}
+				break;
+		}
+	}
+
+	const buttons = document.querySelectorAll('.buttons button');
+	buttons.forEach((button) => {
+		button.addEventListener('click', handleButtonClick);
+	});
 });
