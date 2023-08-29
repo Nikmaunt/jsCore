@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-	const display = document.getElementById('display');
 	let memoryValue = 0;
 	let currentInput = '0';
 	let currentOperation = '';
 	let hasDecimal = false;
 	let memoryOperator = '';
-	let previousOperations = '';
+
 	document.addEventListener('keydown', function (event) {
 		event.preventDefault();
 		const key = event.key;
@@ -42,21 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 
-	function handleMemoryAdd() {
-		memoryValue += parseFloat(currentInput);
-		memoryOperator = '+';
-	}
-
-	function handleMemorySubtract() {
-		memoryValue -= parseFloat(currentInput);
-		memoryOperator = '-';
-	}
-
-	function handleMemoryRecall() {
-		currentInput = memoryValue.toString();
-		updateDisplay();
-	}
-
 	function updateDisplay() {
 		const currentInputDisplay = document.querySelector('.current-input');
 		const previousOperationsDisplay = document.querySelector('.previous-operations');
@@ -71,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		} else {
 			currentInput += number;
 		}
+
 		updateDisplay();
 	}
 
@@ -81,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		} else {
 			currentOperation = `${currentInput} ${operator}`;
 		}
+
 		currentInput = '0';
 		hasDecimal = false;
 		updateDisplay();
@@ -179,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		} else {
 			currentInput = '0';
 		}
+
 		updateDisplay();
 	}
 
