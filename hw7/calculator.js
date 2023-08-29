@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	let currentInput = '0';
 	let currentOperation = '';
 	let hasDecimal = false;
-	let memoryOperator = '';
 
 	document.addEventListener('keydown', function (event) {
 		event.preventDefault();
@@ -33,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
 				handleDecimalInput();
 				break;
 			default:
-				// Если нажата цифровая клавиша
 				if (/^\d$/.test(key)) {
 					handleNumberInput(key);
 				}
